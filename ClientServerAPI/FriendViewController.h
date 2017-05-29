@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  FriendViewController.h
 //  ClientServerAPI
 //
 //  Created by Syngmaster on 28/05/2017.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface FriendViewController : UITableViewController
 
+@property (strong, nonatomic) NSString *userID;
 
 @end
-
