@@ -10,7 +10,8 @@
 #import "ServerManager.h"
 #import "UIImageView+AFNetworking.h"
 
-#import "MainUserTableViewController.h"
+#import "UserDetailsTableViewController.h"
+#import "WallViewController.h"
 
 
 @interface FriendViewController ()
@@ -43,7 +44,6 @@
          self.lastName = [self.userDict valueForKey:@"last_name"];
          
          if (![cityName isEqualToString:@"(null)"]) {
-             
              self.cityName = cityName;
          } else {
              self.cityName = @"No city specified";
@@ -120,20 +120,29 @@
     
     if (indexPath.row == 2) {
         
-        MainUserTableViewController *vc = [[MainUserTableViewController alloc] init];
+        UserDetailsTableViewController *vc = [[UserDetailsTableViewController alloc] init];
         vc.URLString = @"users.getSubscriptions";
         vc.userID = self.userID;
+        vc.navigationItem.title = @"Subscriptions";
         [self.navigationController pushViewController:vc animated:YES];
         
     }
     
     if (indexPath.row == 3) {
         
-        MainUserTableViewController *vc = [[MainUserTableViewController alloc] init];
+        UserDetailsTableViewController *vc = [[UserDetailsTableViewController alloc] init];
         vc.URLString = @"users.getFollowers";
         vc.userID = self.userID;
+        vc.navigationItem.title = @"Followers";
         [self.navigationController pushViewController:vc animated:YES];
         
+    }
+    
+    if (indexPath.row == 4) {
+        
+        WallViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WallViewController"];
+        vc.userID = self.userID;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

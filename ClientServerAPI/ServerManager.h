@@ -23,6 +23,10 @@
 
 - (void)getUserDetails:(NSString *) userID
         withRequestURL:(NSString *) URLString
+             onSuccess:(void(^)(NSArray *details)) success
+             onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure;
+
+- (void)getUserWall:(NSString *) userID
              onSuccess:(void(^)(NSArray *friends)) success
              onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure;
 

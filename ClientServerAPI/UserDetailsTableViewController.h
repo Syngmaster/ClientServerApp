@@ -1,5 +1,5 @@
 //
-//  MainUserTableViewController.h
+//  UserDetailsTableViewController.h
 //  ClientServerAPI
 //
 //  Created by Syngmaster on 29/05/2017.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainUserTableViewController : UITableViewController
+@interface UserDetailsTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray *resultArray;
 @property (strong, nonatomic) NSString *URLString;

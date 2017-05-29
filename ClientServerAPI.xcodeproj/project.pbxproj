@@ -31,8 +31,11 @@
 		DC31822F1EDAFC4C0022D64E /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182201EDAFC4C0022D64E /* UIWebView+AFNetworking.m */; };
 		DC3182321EDB05F60022D64E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182311EDB05F60022D64E /* User.m */; };
 		DC3182351EDB4CF50022D64E /* FriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182341EDB4CF50022D64E /* FriendViewController.m */; };
-		DC31823C1EDC1BC30022D64E /* MainUserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31823B1EDC1BC30022D64E /* MainUserTableViewController.m */; };
+		DC31823C1EDC1BC30022D64E /* UserDetailsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31823B1EDC1BC30022D64E /* UserDetailsTableViewController.m */; };
 		DC3182421EDC1EC40022D64E /* Subscription.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182411EDC1EC40022D64E /* Subscription.m */; };
+		DC3182481EDC52C70022D64E /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182471EDC52C70022D64E /* Wall.m */; };
+		DC31824B1EDC9B6E0022D64E /* WallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31824A1EDC9B6E0022D64E /* WallViewController.m */; };
+		DC31824E1EDCA8050022D64E /* WallViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31824D1EDCA8050022D64E /* WallViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,10 +88,16 @@
 		DC3182311EDB05F60022D64E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		DC3182331EDB4CF50022D64E /* FriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendViewController.h; sourceTree = "<group>"; };
 		DC3182341EDB4CF50022D64E /* FriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendViewController.m; sourceTree = "<group>"; };
-		DC31823A1EDC1BC30022D64E /* MainUserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainUserTableViewController.h; sourceTree = "<group>"; };
-		DC31823B1EDC1BC30022D64E /* MainUserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainUserTableViewController.m; sourceTree = "<group>"; };
+		DC31823A1EDC1BC30022D64E /* UserDetailsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsTableViewController.h; sourceTree = "<group>"; };
+		DC31823B1EDC1BC30022D64E /* UserDetailsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsTableViewController.m; sourceTree = "<group>"; };
 		DC3182401EDC1EC40022D64E /* Subscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscription.h; sourceTree = "<group>"; };
 		DC3182411EDC1EC40022D64E /* Subscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscription.m; sourceTree = "<group>"; };
+		DC3182461EDC52C70022D64E /* Wall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
+		DC3182471EDC52C70022D64E /* Wall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
+		DC3182491EDC9B6E0022D64E /* WallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallViewController.h; sourceTree = "<group>"; };
+		DC31824A1EDC9B6E0022D64E /* WallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallViewController.m; sourceTree = "<group>"; };
+		DC31824C1EDCA8050022D64E /* WallViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallViewCell.h; sourceTree = "<group>"; };
+		DC31824D1EDCA8050022D64E /* WallViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,8 +139,10 @@
 				DC3181E21EDAF8F30022D64E /* MainViewController.m */,
 				DC3182331EDB4CF50022D64E /* FriendViewController.h */,
 				DC3182341EDB4CF50022D64E /* FriendViewController.m */,
-				DC31823A1EDC1BC30022D64E /* MainUserTableViewController.h */,
-				DC31823B1EDC1BC30022D64E /* MainUserTableViewController.m */,
+				DC31823A1EDC1BC30022D64E /* UserDetailsTableViewController.h */,
+				DC31823B1EDC1BC30022D64E /* UserDetailsTableViewController.m */,
+				DC3182491EDC9B6E0022D64E /* WallViewController.h */,
+				DC31824A1EDC9B6E0022D64E /* WallViewController.m */,
 				DC3181E41EDAF8F30022D64E /* Main.storyboard */,
 				DC3181E71EDAF8F30022D64E /* Assets.xcassets */,
 				DC3181E91EDAF8F30022D64E /* LaunchScreen.storyboard */,
@@ -158,6 +169,8 @@
 				DC3182311EDB05F60022D64E /* User.m */,
 				DC3182401EDC1EC40022D64E /* Subscription.h */,
 				DC3182411EDC1EC40022D64E /* Subscription.m */,
+				DC3182461EDC52C70022D64E /* Wall.h */,
+				DC3182471EDC52C70022D64E /* Wall.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -221,6 +234,8 @@
 		DC3182361EDB5B9F0022D64E /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				DC31824C1EDCA8050022D64E /* WallViewCell.h */,
+				DC31824D1EDCA8050022D64E /* WallViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -304,16 +319,19 @@
 				DC3182351EDB4CF50022D64E /* FriendViewController.m in Sources */,
 				DC3181E31EDAF8F30022D64E /* MainViewController.m in Sources */,
 				DC3182211EDAFC4C0022D64E /* AFHTTPSessionManager.m in Sources */,
-				DC31823C1EDC1BC30022D64E /* MainUserTableViewController.m in Sources */,
+				DC31823C1EDC1BC30022D64E /* UserDetailsTableViewController.m in Sources */,
 				DC3182261EDAFC4C0022D64E /* AFURLSessionManager.m in Sources */,
 				DC31822A1EDAFC4C0022D64E /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				DC3181E01EDAF8F30022D64E /* AppDelegate.m in Sources */,
 				DC31822D1EDAFC4C0022D64E /* UIProgressView+AFNetworking.m in Sources */,
 				DC3182221EDAFC4C0022D64E /* AFNetworkReachabilityManager.m in Sources */,
+				DC31824B1EDC9B6E0022D64E /* WallViewController.m in Sources */,
 				DC3181DD1EDAF8F30022D64E /* main.m in Sources */,
 				DC3182291EDAFC4C0022D64E /* AFNetworkActivityIndicatorManager.m in Sources */,
+				DC31824E1EDCA8050022D64E /* WallViewCell.m in Sources */,
 				DC31822C1EDAFC4C0022D64E /* UIImageView+AFNetworking.m in Sources */,
 				DC31822B1EDAFC4C0022D64E /* UIButton+AFNetworking.m in Sources */,
+				DC3182481EDC52C70022D64E /* Wall.m in Sources */,
 				DC31822E1EDAFC4C0022D64E /* UIRefreshControl+AFNetworking.m in Sources */,
 				DC31822F1EDAFC4C0022D64E /* UIWebView+AFNetworking.m in Sources */,
 				DC3182241EDAFC4C0022D64E /* AFURLRequestSerialization.m in Sources */,

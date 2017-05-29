@@ -1,28 +1,28 @@
 //
-//  MainUserTableViewController.m
+//  UserDetailsTableViewController.m
 //  ClientServerAPI
 //
 //  Created by Syngmaster on 29/05/2017.
 //  Copyright © 2017 Syngmaster. All rights reserved.
 //
 
-#import "MainUserTableViewController.h"
+#import "UserDetailsTableViewController.h"
 #import "ServerManager.h"
 #import "Subscription.h"
 #import "UIImageView+AFNetworking.h"
+#import "User.h"
 
-@interface MainUserTableViewController ()
+@interface UserDetailsTableViewController ()
 
 @end
 
-@implementation MainUserTableViewController
+@implementation UserDetailsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.resultArray = [NSArray array];
-    
-    [[ServerManager sharedManager] getUserDetails:self.userID withRequestURL:self.URLString onSuccess:^(NSArray *friends) {
-        self.resultArray = friends;
+    [[ServerManager sharedManager] getUserDetails:self.userID withRequestURL:self.URLString onSuccess:^(NSArray *details) {
+        self.resultArray = details;
         [self.tableView reloadData];
     } onFailure:^(NSError *error, NSInteger statusCode) {
         
@@ -55,13 +55,26 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    Subscription *sub = [self.resultArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = sub.subscriptionName;
-    NSLog(@"%@",sub);
-    __weak UITableViewCell* weakCell = cell;
-    cell.imageView.image = nil;
+    if ([self.URLString isEqualToString:@"users.getSubscriptions"]) {
+        
+        Subscription *sub = [self.resultArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = sub.subscriptionName;
+        [self updateCell:cell withImageFromURL:sub.subscriptionImgURL];
+        
+    } else {
+        
+        User *user = [self.resultArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+        [self updateCell:cell withImageFromURL:user.imageURL];
+    }
+
+}
+
+- (void)updateCell:(UITableViewCell *) cell withImageFromURL:(NSURL *) url {
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:sub.subscriptionImgURL];
+    __weak UITableViewCell* weakCell = cell;
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [cell.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
         weakCell.imageView.image = image;
@@ -72,7 +85,6 @@
         NSLog(@"Error:%@", error.localizedDescription);
         
     }];
-    
 }
 
 @end

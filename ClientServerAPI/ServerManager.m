@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "User.h"
 #import "Subscription.h"
+#import "Wall.h"
 
 @interface ServerManager ()
 
@@ -50,7 +51,7 @@
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
     @"2349419",     @"user_id",
     @"name",        @"order",
-    @"photo_50",    @"fields",
+    @"photo_100",    @"fields",
     @"nom",         @"name_case",
     @(count),       @"count",
     @(offset),      @"offset", nil];
@@ -137,7 +138,7 @@
 
 - (void)getUserDetails:(NSString *) userID
         withRequestURL:(NSString *) URLString
-             onSuccess:(void(^)(NSArray *friends)) success
+             onSuccess:(void(^)(NSArray *details)) success
              onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure; {
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -166,13 +167,62 @@
 
                          } else {
                              
+                             NSArray *dictsArray = [responseObject objectForKey:@"response"];
+                             dictsArray = [dictsArray valueForKey:@"items"];
+                             NSMutableArray* objectsArray = [NSMutableArray array];
+
+                             for (NSDictionary *dict in dictsArray) {
+                                 User *user = [[User alloc] initWithServerResponse:dict];
+                                 [objectsArray addObject:user];
+                             }
                              
+                             if (success) {
+                                 success(objectsArray);
+                             }
+                         }
+   
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+   
+                     }];
+    
+}
+
+- (void)getUserWall:(NSString *) userID
+          onSuccess:(void(^)(NSArray *friends)) success
+          onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure {
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            userID,     @"owner_id",
+                            @"all",     @"filter",
+                            @"0",       @"extended",
+                            @"5.64",    @"v", nil];
+    
+    [self.sessionManager GET:@"wall.get"
+                  parameters:params
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+                         NSArray *dictsArray = [responseObject objectForKey:@"response"];
+                         dictsArray = [dictsArray valueForKey:@"items"];
+                         NSMutableArray* objectsArray = [NSMutableArray array];
+                         
+                         for (NSDictionary *dict in dictsArray) {
+                             Wall *wall = [[Wall alloc] initWithServerResponse:dict];
+                             [objectsArray addObject:wall];
                          }
                          
-                         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         if (success) {
+                             success(objectsArray);
+                         }
+
+    
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-    }];
+        
+    
+                     }];
+    
     
 }
 
