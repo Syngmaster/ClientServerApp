@@ -11,6 +11,10 @@
 @interface Wall : NSObject
 
 @property (strong, nonatomic) NSString *ownerID;
+
+@property (strong, nonatomic) NSString *postOwnerName;
+@property (strong, nonatomic) NSURL *postOwnerImgURL;
+
 @property (strong, nonatomic) NSString *postDate;
 @property (strong, nonatomic) NSString *ownerPostText;
 @property (strong, nonatomic) NSURL *attachmentImgURL;

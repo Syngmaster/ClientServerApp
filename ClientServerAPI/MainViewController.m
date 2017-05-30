@@ -73,6 +73,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
     }
     
+
+    
     User *user = [self.friendsArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
     
@@ -82,14 +84,19 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:user.imageURL];
     
     [cell.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        
         weakCell.imageView.image = image;
         [weakCell layoutSubviews];
+        weakCell.imageView.layer.cornerRadius = CGRectGetMaxX(weakCell.imageView.bounds)/2;
+        weakCell.imageView.clipsToBounds = YES;
         
     } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
         
         NSLog(@"Error:%@", error.localizedDescription);
         
     }];
+    
+
     
     return cell;
 }
@@ -103,6 +110,12 @@
     FriendViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FriendViewController"];
     vc.userID = user.userID;
     [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 55.f;
     
 }
 

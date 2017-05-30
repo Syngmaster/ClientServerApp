@@ -18,7 +18,7 @@
                    onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure;
 
 - (void)getUserInformation:(NSString *) userID
-                   onSuccess:(void(^)(NSArray *friends, NSString *cityName)) success
+                   onSuccess:(void(^)(NSArray *friends, NSString *cityName, BOOL isHidden)) success
                    onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure;
 
 - (void)getUserDetails:(NSString *) userID

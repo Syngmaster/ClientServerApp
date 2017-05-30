@@ -21,6 +21,8 @@
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *cityName;
 
+@property (assign, nonatomic) BOOL wallIsHidden;
+
 @end
 
 @implementation FriendViewController
@@ -37,8 +39,9 @@
     
     [[ServerManager sharedManager]
      getUserInformation:self.userID
-     onSuccess:^(NSArray *friends, NSString *cityName) {
+     onSuccess:^(NSArray *friends, NSString *cityName, BOOL isHidden) {
          
+         self.wallIsHidden = isHidden;
          self.userDict = [friends firstObject];
          self.firstName = [self.userDict valueForKey:@"first_name"];
          self.lastName = [self.userDict valueForKey:@"last_name"];
@@ -50,7 +53,7 @@
          }
 
          dispatch_async(dispatch_get_main_queue(), ^{
-             
+
              self.navigationItem.title = [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
              [self.tableView reloadData];
              
@@ -82,6 +85,7 @@
     
     switch (indexPath.row) {
         case 0:
+            
             cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userDict valueForKey:@"photo_100"]]]];
             cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -140,11 +144,23 @@
     
     if (indexPath.row == 4) {
         
-        WallViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WallViewController"];
-        vc.userID = self.userID;
-        [self.navigationController pushViewController:vc animated:YES];
+        if (self.wallIsHidden) {
+            
+            UIAlertController * contr = [UIAlertController alertControllerWithTitle:@"Access denied" message:@"User hid his wall from accessing from outside" preferredStyle:UIAlertControllerStyleAlert];
+                        
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+            
+            [contr addAction:cancel];
+            
+            [self presentViewController:contr animated:YES completion:nil];
+            
+        } else {
+            
+            WallViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WallViewController"];
+            vc.userID = self.userID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
-    
 }
 
 @end

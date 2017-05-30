@@ -23,7 +23,11 @@
     self.resultArray = [NSArray array];
     [[ServerManager sharedManager] getUserDetails:self.userID withRequestURL:self.URLString onSuccess:^(NSArray *details) {
         self.resultArray = details;
-        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
     } onFailure:^(NSError *error, NSInteger statusCode) {
         
         
@@ -77,14 +81,25 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [cell.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        
         weakCell.imageView.image = image;
         [weakCell layoutSubviews];
+        weakCell.imageView.layer.cornerRadius = CGRectGetMaxX(weakCell.imageView.bounds)/2;
+        weakCell.imageView.clipsToBounds = YES;
         
     } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
         
         NSLog(@"Error:%@", error.localizedDescription);
         
     }];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 55.f;
+    
 }
 
 @end

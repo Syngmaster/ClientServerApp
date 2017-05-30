@@ -16,12 +16,16 @@
     if (self) {
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setTimeStyle:NSDateFormatterMediumStyle];
+        [formatter setDateFormat:@"dd MMM 'at' hh:mm"];
         
+        self.ownerID = [responseObject objectForKey:@"from_id"];
+
+        NSDate *dateTime = [NSDate dateWithTimeIntervalSince1970:[[responseObject objectForKey:@"date"] floatValue]];
+        NSString *date = [formatter stringFromDate:dateTime];
+        self.postDate = date;
         
-        self.ownerID = [responseObject objectForKey:@"owner_id"];
-        self.postDate = [responseObject objectForKey:@"date"];
         self.ownerPostText = [responseObject objectForKey:@"text"];
+        
         NSArray *attachmentArray = [responseObject objectForKey:@"attachments"];
         NSDictionary *dict = [attachmentArray firstObject];
         NSDictionary *photoDict = [dict objectForKey:@"photo"];
@@ -39,8 +43,8 @@
         NSArray *repostsArray = [responseObject objectForKey:@"reposts"];
         self.reposts = [repostsArray valueForKey:@"count"];
 
-        
     }
+    
     return self;
 }
 

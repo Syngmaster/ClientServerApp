@@ -84,13 +84,15 @@
 }
 
 - (void)getUserInformation:(NSString *) userID
-                 onSuccess:(void(^)(NSArray *friends, NSString *cityName)) success
+                 onSuccess:(void(^)(NSArray *friends, NSString *cityName, BOOL isHidden)) success
                  onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure {
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
                             userID,             @"user_ids",
                             @"name",            @"order",
                 @"city, country, photo_100",    @"fields",
                             @"nom",             @"name_case", nil];
+    
+    __block BOOL isHidden = NO;
     
     [self.sessionManager GET:@"users.get"
                   parameters:params
@@ -117,7 +119,7 @@
             }
             
             if (success) {
-                success (dictsArray, cityName);
+                success (dictsArray, cityName, isHidden);
             }
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -125,7 +127,7 @@
         }];
         
         if (success) {
-            success(dictsArray, cityName);
+            success(dictsArray, cityName, isHidden);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -134,6 +136,29 @@
             failure(error, httpResponse.statusCode);
         }
     }];
+    
+    
+    NSDictionary *wallParams = [[NSDictionary alloc] initWithObjectsAndKeys: userID, @"owner_id", nil];
+    
+    [self.sessionManager GET:@"wall.get"
+                  parameters:wallParams
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         //NSString *error = @"Access denied: user hid his wall from accessing from outside";
+                         if ([responseObject objectForKey:@"error"]) {
+                             isHidden = YES;
+                             if (success) {
+                                 success (nil, nil, isHidden);
+                             }
+                         }
+                         
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         if (failure) {
+                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task;
+                             failure(error, httpResponse.statusCode);
+                         }
+                     }];
+    
 }
 
 - (void)getUserDetails:(NSString *) userID
@@ -182,8 +207,10 @@
                          }
    
                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-   
+                         if (failure) {
+                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task;
+                             failure(error, httpResponse.statusCode);
+                         }
                      }];
     
 }
@@ -202,13 +229,14 @@
                   parameters:params
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+                         
                          NSArray *dictsArray = [responseObject objectForKey:@"response"];
                          dictsArray = [dictsArray valueForKey:@"items"];
                          NSMutableArray* objectsArray = [NSMutableArray array];
                          
                          for (NSDictionary *dict in dictsArray) {
                              Wall *wall = [[Wall alloc] initWithServerResponse:dict];
+                             [self getNameAndImageOfPostOwner:wall];
                              [objectsArray addObject:wall];
                          }
                          
@@ -216,13 +244,39 @@
                              success(objectsArray);
                          }
 
-    
                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        
-    
+                         if (failure) {
+                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task;
+                             failure(error, httpResponse.statusCode);
+                         }
                      }];
     
+}
+
+- (void)getNameAndImageOfPostOwner:(Wall *) wall {
+    
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            wall.ownerID,             @"user_ids",
+                            @"name",            @"order",
+                            @"city, country, photo_100",    @"fields",
+                            @"nom",             @"name_case", nil];
+    
+    [self.sessionManager GET:@"users.get"
+                  parameters:params
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+                         __block NSArray *dictsArray = [responseObject objectForKey:@"response"];
+                         NSDictionary *dict = [dictsArray firstObject];
+                         NSString *firstName = [dict valueForKey:@"first_name"];
+                         NSString *lastName = [dict valueForKey:@"last_name"];
+                         wall.postOwnerName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+                         wall.postOwnerImgURL = [NSURL URLWithString:[dict valueForKey:@"photo_100"]];
+   
+                     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+   
+                     }];
     
 }
 
