@@ -24,7 +24,21 @@
         NSString *date = [formatter stringFromDate:dateTime];
         self.postDate = date;
         
-        self.ownerPostText = [responseObject objectForKey:@"text"];
+        NSString *text = [responseObject objectForKey:@"text"];
+        
+        UIFont *font = [UIFont systemFontOfSize:17];
+        
+        NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+        [paragraph setLineBreakMode:NSLineBreakByWordWrapping];
+        [paragraph setAlignment:NSTextAlignmentCenter];
+        
+        
+        NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+                              font, NSFontAttributeName,
+                              paragraph, NSParagraphStyleAttributeName, nil];
+        
+        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:text attributes:attr];
+        self.ownerPostText = result.string;
         
         NSArray *attachmentArray = [responseObject objectForKey:@"attachments"];
         NSDictionary *dict = [attachmentArray firstObject];

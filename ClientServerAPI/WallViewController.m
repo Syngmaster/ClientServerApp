@@ -28,11 +28,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.resultArray = [NSArray array];
     [self getUserWall:self.userID];
+    [self.tableView reloadData];
 
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -51,58 +50,76 @@
                                      } onFailure:^(NSError *error, NSInteger statusCode) {
                                          
                                      }];
-    
 }
 
 #pragma mark - UITableViewDataSource
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.resultArray count];
+    return 1;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.resultArray count];
+}
 
 - (WallViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
         
     WallViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WallCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    Wall *wall = [self.resultArray objectAtIndex:indexPath.row];
+    Wall *wall = [self.resultArray objectAtIndex:indexPath.section];
     cell.userName.text = wall.postOwnerName;
     //cell.userImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:wall.postOwnerImgURL]];
     cell.postDate.text = [NSString stringWithFormat:@"%@", wall.postDate];
     cell.likeLabel.text = [NSString stringWithFormat:@"Like %@", wall.likes ? wall.likes : @""];
     cell.postLabel.text = [NSString stringWithFormat:@"Share %@", wall.reposts ? wall.reposts : @""];
     cell.viewLabel.text = [NSString stringWithFormat:@"View %@", wall.views ? wall.views : @""];
-
+    cell.postBodyText.text = wall.ownerPostText;
+    cell.postBodyImage.image = nil;
     
     __weak WallViewCell* weakCell = cell;
-    cell.userImage.image = nil;
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:wall.postOwnerImgURL];
-    
-    [cell.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
-        weakCell.userImage.image = image;
-        [weakCell layoutSubviews];
-        
-    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
-        
-        NSLog(@"Error:%@", error.localizedDescription);
-        
-    }];
-
-    
-    
+    [weakCell layoutSubviews];
+    [self setImageView:weakCell.userImage withURLRequest:wall.postOwnerImgURL];
+    [self setImageView:weakCell.postBodyImage withURLRequest:wall.attachmentImgURL];
     return cell;
 }
 
+- (void)setImageView:(UIImageView *) cellImageView withURLRequest:(NSURL *) url {
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    __weak UIImageView *weakImgView = cellImageView;
+    
+    [cellImageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        
+        weakImgView.image = image;
+        
+    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+        NSLog(@"Error:%@", error.localizedDescription);
+    }];
+}
+
+
+
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Wall *wall = [self.resultArray objectAtIndex:indexPath.section];
+    NSLog(@"%@", wall.attachmentImgURL);
+    if (!wall.attachmentImgURL) {
+        return 150;
+    } else {
+        return tableView.rowHeight;
+    }
+    
+}
 
-/*- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 200.f;
-    
-}*/
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 5.f;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 5.f;
+}
 
 
 @end

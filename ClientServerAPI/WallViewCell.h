@@ -17,4 +17,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *postLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *postBodyText;
+@property (weak, nonatomic) IBOutlet UIImageView *postBodyImage;
+
+
+
++ (CGFloat)heightForText:(NSString *) string;
+
+
 @end
