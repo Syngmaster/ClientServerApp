@@ -11,6 +11,7 @@
 #import "User.h"
 #import "UIImageView+AFNetworking.h"
 #import "FriendViewController.h"
+#import "LoginViewController.h"
 
 
 @interface MainViewController ()
@@ -25,6 +26,11 @@
     
     self.friendsArray = [NSMutableArray array];
     [self getFriendsFromServer];
+    
+    LoginViewController *vc = [[LoginViewController alloc] init];
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    [self presentViewController:navVC animated:YES completion:nil];
 
 }
 

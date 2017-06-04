@@ -37,6 +37,7 @@
 		DC31824B1EDC9B6E0022D64E /* WallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31824A1EDC9B6E0022D64E /* WallViewController.m */; };
 		DC31824E1EDCA8050022D64E /* WallViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31824D1EDCA8050022D64E /* WallViewCell.m */; };
 		DC3182521EDD7E2C0022D64E /* CustomImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182511EDD7E2C0022D64E /* CustomImageView.m */; };
+		DC3182551EE488140022D64E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182541EE488140022D64E /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,8 @@
 		DC31824D1EDCA8050022D64E /* WallViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallViewCell.m; sourceTree = "<group>"; };
 		DC3182501EDD7E2C0022D64E /* CustomImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImageView.h; sourceTree = "<group>"; };
 		DC3182511EDD7E2C0022D64E /* CustomImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomImageView.m; sourceTree = "<group>"; };
+		DC3182531EE488140022D64E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		DC3182541EE488140022D64E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +151,8 @@
 				DC3182491EDC9B6E0022D64E /* WallViewController.h */,
 				DC31824A1EDC9B6E0022D64E /* WallViewController.m */,
 				DC3181E41EDAF8F30022D64E /* Main.storyboard */,
+				DC3182531EE488140022D64E /* LoginViewController.h */,
+				DC3182541EE488140022D64E /* LoginViewController.m */,
 				DC3181E71EDAF8F30022D64E /* Assets.xcassets */,
 				DC3181E91EDAF8F30022D64E /* LaunchScreen.storyboard */,
 				DC3181EC1EDAF8F30022D64E /* Info.plist */,
@@ -329,6 +334,7 @@
 				DC3182231EDAFC4C0022D64E /* AFSecurityPolicy.m in Sources */,
 				DC3182251EDAFC4C0022D64E /* AFURLResponseSerialization.m in Sources */,
 				DC3181FA1EDAFA3D0022D64E /* ServerManager.m in Sources */,
+				DC3182551EE488140022D64E /* LoginViewController.m in Sources */,
 				DC3182351EDB4CF50022D64E /* FriendViewController.m in Sources */,
 				DC3181E31EDAF8F30022D64E /* MainViewController.m in Sources */,
 				DC3182211EDAFC4C0022D64E /* AFHTTPSessionManager.m in Sources */,

@@ -69,7 +69,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     Wall *wall = [self.resultArray objectAtIndex:indexPath.section];
     cell.userName.text = wall.postOwnerName;
-    //cell.userImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:wall.postOwnerImgURL]];
     cell.postDate.text = [NSString stringWithFormat:@"%@", wall.postDate];
     cell.likeLabel.text = [NSString stringWithFormat:@"Like %@", wall.likes ? wall.likes : @""];
     cell.postLabel.text = [NSString stringWithFormat:@"Share %@", wall.reposts ? wall.reposts : @""];

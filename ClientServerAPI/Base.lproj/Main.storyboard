@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main View Controller-->
+        <!--Friends-->
         <scene sceneID="4Zg-aw-jQL">
             <objects>
                 <tableViewController id="uVK-aa-Dsc" customClass="MainViewController" sceneMemberID="viewController">
@@ -34,7 +34,7 @@
                             <outlet property="delegate" destination="uVK-aa-Dsc" id="1Ui-pR-mua"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="g3x-P8-jkO">
+                    <navigationItem key="navigationItem" title="Friends" id="g3x-P8-jkO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="KU9-MC-Ci7">
                             <connections>
                                 <action selector="addFriendsAction:" destination="uVK-aa-Dsc" id="mOm-1S-p3e"/>

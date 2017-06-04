@@ -274,8 +274,7 @@
                          wall.postOwnerImgURL = [NSURL URLWithString:[dict valueForKey:@"photo_100"]];
    
                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-   
+
                      }];
     
 }
