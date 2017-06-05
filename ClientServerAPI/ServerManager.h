@@ -20,8 +20,7 @@
        onSuccess:(void(^)(User* user)) success
        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
-- (void)getFriendsWithOffset:(NSInteger) offset
-                       count:(NSInteger) count
+- (void)getFriendsOfUser:(NSString *) userID
                    onSuccess:(void(^)(NSArray *friends)) success
                    onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure;
 

@@ -46,24 +46,23 @@
     return self;
 }
 
-- (void)getFriendsWithOffset:(NSInteger) offset
-                       count:(NSInteger) count
+- (void)getFriendsOfUser:(NSString *) userID
                    onSuccess:(void(^)(NSArray *friends)) success
                    onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure {
     
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
-    @"2349419",     @"user_id",
+    userID,         @"user_id",
     @"name",        @"order",
-    @"photo_100",    @"fields",
+    @"photo_100",   @"fields",
     @"nom",         @"name_case",
-    @(count),       @"count",
-    @(offset),      @"offset", nil];
+    @"5.64",        @"v", nil];
     
     [self.sessionManager GET:@"friends.get"
                   parameters:params
                     progress:nil
                      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray *dictsArray = [responseObject objectForKey:@"response"];
+        NSDictionary *dict = [responseObject objectForKey:@"response"];
+        NSArray *dictsArray = [dict valueForKey:@"items"];
 
         NSMutableArray* objectsArray = [NSMutableArray array];
         
@@ -326,14 +325,14 @@
     [NSDictionary dictionaryWithObjectsAndKeys:
      userID,        @"user_ids",
      @"photo_50",   @"fields",
-     @"nom",        @"name_case", nil];
+     @"nom",        @"name_case",
+     @"5.64",       @"v", nil];
     
     [self.sessionManager
      GET:@"users.get"
      parameters:params
      progress:nil
      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-         NSLog(@"JSON: %@", responseObject);
          
          NSArray* dictsArray = [responseObject objectForKey:@"response"];
          

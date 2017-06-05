@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "Token.h"
+#import "ServerManager.h"
 
 @interface LoginViewController () <UIWebViewDelegate>
 
@@ -61,7 +62,7 @@
 #pragma mark - Actions
 
 - (void)cancelAction:(UIBarButtonItem *) sender {
-    
+        
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

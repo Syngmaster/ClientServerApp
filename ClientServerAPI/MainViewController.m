@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) NSMutableArray *friendsArray;
 @property (assign, nonatomic) BOOL firstTimeAppear;
+@property (strong, nonatomic) User *user;
 
 @end
 
@@ -32,22 +33,18 @@
 
 }
 
-- (void)getFriendsFromServer {
+- (void)getFriendsFromServer:(User *) user  {
     
-    [[ServerManager sharedManager]
-     getFriendsWithOffset:[self.friendsArray count]
-     count:10
-     onSuccess:^(NSArray *friends) {
-                                                  
+    [[ServerManager sharedManager] getFriendsOfUser:user.userID onSuccess:^(NSArray *friends) {
+        
         [self.friendsArray addObjectsFromArray:friends];
         [self.tableView reloadData];
-
-     }
-     onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
         NSLog(@"error = %@, code = %li", [error localizedDescription], statusCode);
 
-     }];
-    
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -60,18 +57,19 @@
             
             NSLog(@"AUTHORIZED!");
             NSLog(@"%@ %@", user.firstName, user.lastName);
+            self.user = user;
+            NSLog(@"User id - %@", user.userID);
+            [self getFriendsFromServer:self.user];
+
         }];
-        
     }
-    
-    
 }
 
 #pragma mark - Action
 
 - (IBAction)addFriendsAction:(UIBarButtonItem *)sender {
     
-    [self getFriendsFromServer];
+    //[self getFriendsFromServer];
     
 }
 
