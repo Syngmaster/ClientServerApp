@@ -11,10 +11,13 @@
 #import "User.h"
 #import "Subscription.h"
 #import "Wall.h"
+#import "LoginViewController.h"
+#import "Token.h"
 
 @interface ServerManager ()
 
 @property (strong, nonatomic) AFHTTPSessionManager* sessionManager;
+@property (strong, nonatomic) Token *accessToken;
 
 @end
 
@@ -278,5 +281,83 @@
                      }];
     
 }
+
+- (void) authorizeUser:(void(^)(User* user)) completion {
+    
+    LoginViewController *vc = [[LoginViewController alloc] initWithCompletionBlock:^(Token *token) {
+        
+        self.accessToken = token;
+        
+        if (token) {
+            
+            [self getUser:self.accessToken.userID onSuccess:^(User *user) {
+                
+                if (completion) {
+                    completion(user);
+                }
+                
+            } onFailure:^(NSError *error, NSInteger statusCode) {
+                
+                if (completion) {
+                    completion(nil);
+                }
+                
+            }];
+            
+        } else if (completion) {
+            completion(nil);
+        }
+        
+    }];
+    
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    UIViewController *mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+    
+    [mainVC presentViewController:navVC animated:YES completion:nil];
+    
+}
+
+- (void) getUser:(NSString*) userID
+       onSuccess:(void(^)(User* user)) success
+       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    NSDictionary* params =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     userID,        @"user_ids",
+     @"photo_50",   @"fields",
+     @"nom",        @"name_case", nil];
+    
+    [self.sessionManager
+     GET:@"users.get"
+     parameters:params
+     progress:nil
+     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         NSArray* dictsArray = [responseObject objectForKey:@"response"];
+         
+         if ([dictsArray count] > 0) {
+             User* user = [[User alloc] initWithServerResponse:[dictsArray firstObject]];
+             if (success) {
+                 success(user);
+             }
+         } else {
+             if (failure) {
+                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task;
+                 failure(nil, httpResponse.statusCode);
+             }
+         }
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         if (failure) {
+             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) task;
+             failure(error, httpResponse.statusCode);
+         }
+     }];
+
+    
+}
+
 
 @end

@@ -38,6 +38,7 @@
 		DC31824E1EDCA8050022D64E /* WallViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC31824D1EDCA8050022D64E /* WallViewCell.m */; };
 		DC3182521EDD7E2C0022D64E /* CustomImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182511EDD7E2C0022D64E /* CustomImageView.m */; };
 		DC3182551EE488140022D64E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182541EE488140022D64E /* LoginViewController.m */; };
+		DC3182581EE5C33A0022D64E /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3182571EE5C33A0022D64E /* Token.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +105,8 @@
 		DC3182511EDD7E2C0022D64E /* CustomImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomImageView.m; sourceTree = "<group>"; };
 		DC3182531EE488140022D64E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		DC3182541EE488140022D64E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		DC3182561EE5C33A0022D64E /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
+		DC3182571EE5C33A0022D64E /* Token.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Token.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,8 @@
 				DC3182411EDC1EC40022D64E /* Subscription.m */,
 				DC3182461EDC52C70022D64E /* Wall.h */,
 				DC3182471EDC52C70022D64E /* Wall.m */,
+				DC3182561EE5C33A0022D64E /* Token.h */,
+				DC3182571EE5C33A0022D64E /* Token.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC3182581EE5C33A0022D64E /* Token.m in Sources */,
 				DC3182321EDB05F60022D64E /* User.m in Sources */,
 				DC3182231EDAFC4C0022D64E /* AFSecurityPolicy.m in Sources */,
 				DC3182251EDAFC4C0022D64E /* AFURLResponseSerialization.m in Sources */,

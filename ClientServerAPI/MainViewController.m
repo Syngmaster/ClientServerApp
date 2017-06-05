@@ -15,7 +15,9 @@
 
 
 @interface MainViewController ()
+
 @property (strong, nonatomic) NSMutableArray *friendsArray;
+@property (assign, nonatomic) BOOL firstTimeAppear;
 
 @end
 
@@ -25,12 +27,8 @@
     [super viewDidLoad];
     
     self.friendsArray = [NSMutableArray array];
-    [self getFriendsFromServer];
-    
-    LoginViewController *vc = [[LoginViewController alloc] init];
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
-    
-    [self presentViewController:navVC animated:YES completion:nil];
+    //[self getFriendsFromServer];
+    self.firstTimeAppear = YES;
 
 }
 
@@ -49,6 +47,23 @@
         NSLog(@"error = %@, code = %li", [error localizedDescription], statusCode);
 
      }];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.firstTimeAppear) {
+        self.firstTimeAppear = NO;
+        
+        [[ServerManager sharedManager] authorizeUser:^(User *user) {
+            
+            NSLog(@"AUTHORIZED!");
+            NSLog(@"%@ %@", user.firstName, user.lastName);
+        }];
+        
+    }
+    
     
 }
 

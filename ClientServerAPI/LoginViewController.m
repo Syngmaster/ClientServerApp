@@ -7,12 +7,22 @@
 //
 
 #import "LoginViewController.h"
+#import "Token.h"
 
 @interface LoginViewController () <UIWebViewDelegate>
 
 @end
 
 @implementation LoginViewController
+
+- (instancetype)initWithCompletionBlock:(LoginViewToken) completionBlock;
+{
+    self = [super init];
+    if (self) {
+        self.completionBlock = completionBlock;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,7 +69,41 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    NSLog(@"%@", request);
+    NSLog(@"this is - %@", [[request URL] description]);
+    
+    if ([[[request URL] description] rangeOfString:@"#access_token="].location != NSNotFound) {
+        
+        Token *token = [[Token alloc] init];
+        NSString *query = [[request URL] description];
+        NSArray *array = [query componentsSeparatedByString:@"#"];
+        
+        if ([array count] > 1) {
+            query = [array lastObject];
+        }
+        
+        NSArray *pairs = [query componentsSeparatedByString:@"&"];
+        
+        for (NSString *pair in pairs) {
+            
+            NSArray *values = [pair componentsSeparatedByString:@"="];
+            
+            if ([values count] == 2) {
+                
+                if ([values[0] isEqualToString:@"access_token"]) {
+                    token.tokenID = values[1];
+                } else if ([values[0] isEqualToString:@"expires_in"]) {
+                    token.expireDate = [NSDate dateWithTimeIntervalSinceNow:[values[1] doubleValue]];
+                } else {
+                    token.userID = values[1];
+                }
+                
+            }
+        }
+
+        if (self.completionBlock) {
+            self.completionBlock(token);
+        }
+    }
     
     return YES;
     
